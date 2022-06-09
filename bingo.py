@@ -7,14 +7,14 @@ def gerar_cartelas(quantidade_cartelas=1, numero_inicial=1):
     def desenhar_rodape(desenho, numero_inicial):
         xcor = 750
         ycor = 1015
-        fonte=ImageFont.truetype("Dunkin.otf",40)
+        fonte=ImageFont.truetype("assets/Dunkin.otf",40)
         desenho.text((xcor,ycor), str(numero_inicial), font=fonte,fill=(108,49,14,255))
         return desenho
 
     def desenhar(valores_bingo, numero_inicial):
-        cartela = Image.open("cartela.png")
+        cartela = Image.open("assets/cartela.png")
         desenho = ImageDraw.Draw(cartela)
-        fonte=ImageFont.truetype("Dunkin.otf",80)
+        fonte=ImageFont.truetype("assets/Dunkin.otf",80)
 
         # o resultado fica [[b], [i], [n], [g], [o]]
         # a 'linha' é relativa à letra, por isso é de cima para baixo
@@ -32,7 +32,7 @@ def gerar_cartelas(quantidade_cartelas=1, numero_inicial=1):
                 y += delta
 
         desenhar_rodape(desenho, numero_inicial)
-        cartela.save(f"cartelas/{numero_inicial}.png")
+        cartela.save(f"assets/cartelas_geradas/{numero_inicial}.png")
 
     def embaralhar(quantidade_cartelas, numero_inicial):
         while quantidade_cartelas:
