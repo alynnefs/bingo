@@ -8,7 +8,7 @@ def gerar_cartelas(quantidade_cartelas=1, numero_inicial=1):
         xcor = 750
         ycor = 1015
         fonte=ImageFont.truetype("Dunkin.otf",40)
-        desenho.text((xcor,ycor),str(numero_inicial),font=fonte,fill=(0,0,0,255))
+        desenho.text((xcor,ycor), str(numero_inicial), font=fonte,fill=(108,49,14,255))
         return desenho
 
     def desenhar(valores_bingo, numero_inicial):
@@ -17,16 +17,18 @@ def gerar_cartelas(quantidade_cartelas=1, numero_inicial=1):
         fonte=ImageFont.truetype("Dunkin.otf",80)
 
         # o resultado fica [[b], [i], [n], [g], [o]]
+        # a 'linha' é relativa à letra, por isso é de cima para baixo
         delta = 160
         x = 10
-        y = 25
-        # TODO: pegar o índice sem usar range
-        for coluna in valores_bingo:
+
+        for indice_c, coluna in enumerate(valores_bingo):
             x += delta
             y = 225
-            for linha in coluna:
-                # TODO: verificar se é [2,2]. Se sim, soma delta no y
-                desenho.text((x,y),str(linha),font=fonte,fill=(0,0,0,255))
+            for indice_l, linha in enumerate(coluna):
+                if indice_c == indice_l == 2:
+                    # também soma aqui por causa do quadrado do meio
+                    y += delta 
+                desenho.text((x,y),str(linha),font=fonte,fill=(108,49,14,255))
                 y += delta
 
         desenhar_rodape(desenho, numero_inicial)
@@ -34,7 +36,7 @@ def gerar_cartelas(quantidade_cartelas=1, numero_inicial=1):
 
     def embaralhar(quantidade_cartelas, numero_inicial):
         while quantidade_cartelas:
-            print(numero_inicial)
+            #print(numero_inicial)
             valores_bingo = [
                 random.sample(range(1, 16), 5),
                 random.sample(range(16, 31), 5),
@@ -48,4 +50,4 @@ def gerar_cartelas(quantidade_cartelas=1, numero_inicial=1):
                 
     embaralhar(quantidade_cartelas=quantidade_cartelas, numero_inicial=numero_inicial)
 
-gerar_cartelas(3, 4)
+gerar_cartelas(3, 1)
