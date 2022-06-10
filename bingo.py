@@ -1,3 +1,7 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import os
 import random
 from PIL import ImageFont,ImageDraw,Image
 
@@ -50,4 +54,53 @@ def gerar_cartelas(quantidade_cartelas=1, numero_inicial=1):
                 
     embaralhar(quantidade_cartelas=quantidade_cartelas, numero_inicial=numero_inicial)
 
-gerar_cartelas(3, 1)
+
+def juntar_em_pdf():
+    os.chdir("assets/cartelas_geradas/")
+    cartelas = os.listdir()
+
+    indice_gitkeep = cartelas.index(".gitkeep")
+    cartelas.pop(indice_gitkeep)
+    imagens = [Image.open(x) for x in cartelas]
+
+    delta = 240
+    largura = delta
+    altura = delta
+    x = 0
+    y = 0
+
+    # tamanho da folha A4
+    new_image = Image.new('RGB',(585, 841), (250,250,250))
+    for indice, imagem in enumerate(imagens):
+        if indice % 6 == 0 and indice != 0:
+            # salva o PDF atual, com 6 cartelas
+            new_image.save(f"para_pdf_{indice}.jpg", "JPEG")
+
+            # reinicia os valores
+            new_image = Image.new('RGB',(585, 841), (250,250,250))
+            largura = delta
+            altura = delta
+            x = 0
+            y = 0
+
+        elif indice % 2 == 0 and indice != 0:
+            # vai para a linha de baixo
+            x = 0
+            y += delta
+
+        i = imagem.resize((largura, altura))
+        new_image.paste(i,(x,y))
+        # vai para a coluna da direita
+        x += delta
+
+    # salva a última folha
+    new_image.save(f"para_pdf_{indice}.jpg", "JPEG")
+    new_image.show()
+
+    # junta os PDFs
+    os.system('convert para_pdf_* imprimir.pdf')
+
+
+gerar_cartelas(10, 1)
+juntar_em_pdf()
+
