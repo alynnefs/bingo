@@ -52,7 +52,7 @@ def gerar_cartelas(quantidade=1, numero_inicial=1):
         cartela.save(f"assets/cartelas_geradas/cartela_{i}.png")
 
 
-def juntar_em_pdf():
+def juntar_as_cartelas():
     os.chdir("assets/cartelas_geradas/")
     cartelas = os.listdir()
 
@@ -98,4 +98,4 @@ def juntar_em_pdf():
 
 
 gerar_cartelas(quantidade=7, numero_inicial=3)
-juntar_em_pdf()
+juntar_as_cartelas()

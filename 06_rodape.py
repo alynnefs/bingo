@@ -40,10 +40,9 @@ def desenhar_numeros(numeros_cartela):
             if indice_c == indice_l == 2:
                 # também soma aqui por causa do quadrado do meio
                 y += delta
-            desenhar_rodape()  # LINHA ADICIONADA
             desenho.text((x, y), str(linha), font=fonte, fill=cor)
             y += delta
-
+    desenhar_rodape()  # LINHA ADICIONADA
     cartela.save(f"assets/cartelas_geradas/cartela_resultante.png")
 
 
