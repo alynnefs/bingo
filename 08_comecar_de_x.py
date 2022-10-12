@@ -41,7 +41,7 @@ def desenhar_numeros(desenho, numeros_cartela, pagina=1):
 
 
 def gerar_cartelas(quantidade=1, numero_inicial=1):
-    for i in range(numero_inicial, quantidade+numero_inicial):
+    for i in range(numero_inicial, quantidade + numero_inicial):
         cartela = Image.open("assets/cartela.png")
         desenho = ImageDraw.Draw(cartela)
 
