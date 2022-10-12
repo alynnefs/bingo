@@ -42,7 +42,7 @@ def desenhar_numeros(desenho, numeros_cartela, pagina=1):
 
 
 def gerar_cartelas(quantidade=1, numero_inicial=1):
-    for i in range(numero_inicial, quantidade+numero_inicial):
+    for i in range(numero_inicial, quantidade + numero_inicial):
         cartela = Image.open("assets/cartela.png")
         desenho = ImageDraw.Draw(cartela)
 
@@ -50,10 +50,9 @@ def gerar_cartelas(quantidade=1, numero_inicial=1):
         desenhar_numeros(desenho, numeros_cartela, pagina=i)
         desenhar_rodape(desenho, pagina=i)
         cartela.save(f"assets/cartelas_geradas/cartela_{i}.png")
-        
+
 
 def juntar_em_pdf():
-    #imagem = Image.new("RGB", (585, 841), (250, 250, 250))
     os.chdir("assets/cartelas_geradas/")
     cartelas = os.listdir()
 
@@ -61,7 +60,7 @@ def juntar_em_pdf():
     cartelas.pop(indice_gitkeep)
     imagens = [Image.open(x) for x in cartelas]
 
-    delta = 240 # tamanho da cartela
+    delta = 240  # tamanho da cartela
     largura = delta
     altura = delta
     x = 0
