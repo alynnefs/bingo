@@ -1,4 +1,3 @@
-import os
 import random
 from PIL import ImageFont, ImageDraw, Image
 
@@ -41,8 +40,8 @@ def desenhar_numeros(desenho, numeros_cartela, pagina=1):
             y += delta
 
 
-def gerar_cartelas(quantidade=1):
-    for i in range(1, quantidade+1):
+def gerar_cartelas(quantidade=1, numero_inicial=1):
+    for i in range(numero_inicial, quantidade+numero_inicial):
         cartela = Image.open("assets/cartela.png")
         desenho = ImageDraw.Draw(cartela)
 
@@ -50,53 +49,6 @@ def gerar_cartelas(quantidade=1):
         desenhar_numeros(desenho, numeros_cartela, pagina=i)
         desenhar_rodape(desenho, pagina=i)
         cartela.save(f"assets/cartelas_geradas/cartela_{i}.png")
-        
-
-def juntar_em_pdf():
-    #imagem = Image.new("RGB", (585, 841), (250, 250, 250))
-    os.chdir("assets/cartelas_geradas/")
-    cartelas = os.listdir()
-
-    indice_gitkeep = cartelas.index(".gitkeep")
-    cartelas.pop(indice_gitkeep)
-    imagens = [Image.open(x) for x in cartelas]
-
-    delta = 240 # tamanho da cartela
-    largura = delta
-    altura = delta
-    x = 0
-    y = 0
-
-    # tamanho da folha A4
-    nova_imagem = Image.new("RGB", (585, 841), (250, 250, 250))
-    indice = 0
-    while indice < len(imagens):
-        if indice % 6 == 0 and indice != 0:
-            # salva o PDF atual, com 6 cartelas
-            nova_imagem.save(f"para_pdf_{indice}.jpg", "JPEG")
-
-            # reinicia os valores
-            nova_imagem = Image.new("RGB", (585, 841), (250, 250, 250))
-            largura = delta
-            altura = delta
-            x = 0
-            y = 0
-
-        elif indice % 2 == 0 and indice != 0:
-            # vai para a linha de baixo
-            x = 0
-            y += delta
-
-        i = imagens[indice].resize((largura, altura))
-        nova_imagem.paste(i, (x, y))
-
-        # vai para a coluna da direita
-        x += delta
-        indice += 1
-
-    # salva a última folha
-    nova_imagem.save(f"para_pdf_{indice}.jpg", "JPEG")
 
 
-gerar_cartelas(quantidade=13)
-juntar_em_pdf()
+gerar_cartelas(quantidade=4, numero_inicial=3)
