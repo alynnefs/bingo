@@ -99,4 +99,4 @@ def juntar_as_cartelas():
 
 gerar_cartelas(quantidade=7, numero_inicial=3)
 juntar_as_cartelas()
-os.system("convert para_pdf_* imprimir.pdf")
+os.system("img2pdf para_pdf_* --out imprimir.pdf")
