@@ -2,17 +2,59 @@ import os
 import random
 from PIL import ImageFont, ImageDraw, Image, ImageOps
 
-cor = (108, 49, 14, 255)
+cor = (238, 124, 139, 255)
 
 
 def selecionar_numeros():
-    lista = ["C. de facas", "C. de sobremesa", "C. de taças", "C. de talheres", "Desc. de panela", "Fôrma de bolo", "Frigideira", "Jarra", "J. de café", "J. de chá", "J. de copos", "J. de jantar", "J. de mesa posta", "J. de panelas", "Lixeira", "Luva térmica", "Panos de prato", "Peneiras", "Porta-guard.", "Potes", "Ralador", "Tábua de cortes", "Tábua de frios", "Tigelas", "Toalha de mesa", "Almofadas", "Travesseiros", "Cobertor", "Jogo de cama", "Lençol", "Tábua de passar", "Ferro de passar", "rede", "toalha", "tapetes", "kit de banheiro", "balde retrátil", "capacho", "vassoura", "pá", "MOP", "Rodo", "Extensão elétrica", "ferramentas", "Pix"]
+    lista = [
+        "Afiador de facas",
+        "Avental",
+        "C. colheres",
+        "C. facas",
+        "C. sobremesa",
+        "C. taças",
+        "C. talheres",
+        "Desc. de panela",
+        "Fôrma de bolo",
+        "Frigideira",
+        "J. de café",
+        "J. de chá",
+        "J. de jantar",
+        "J. de mesa posta",
+        "J. de panelas",
+        "Lixeira",
+        "Luva térmica",
+        "Panos de prato",
+        "Peneiras",
+        "Potes de vidro",
+        "Ralador",
+        "Sanduicheira",
+        "Tábua de cortes",
+        "Tábua de frios",
+        "Toalha de mesa",
+        "Travessa",
+        "Almofadas",
+        "Cobertor",
+        "Cortina",
+        "J. de cama",
+        "Lençóis",
+        "Rede",
+        "Travesseiros",
+        "Balde retrátil",
+        "Capacho",
+        "Extensão elétrica",
+        "J. de tapetes",
+        "Kit lavabo",
+        "Ferramentas",
+        "Kit limpeza",
+        "Toalhas",
+    ]
     tabela = [
         random.sample(range(0, 9), 5),
-        random.sample(range(0, 18), 5),
+        random.sample(range(9, 18), 5),
         random.sample(range(18, 27), 4),
         random.sample(range(27, 36), 5),
-        random.sample(range(3, 45), 5),
+        random.sample(range(36, 41), 5),
     ]
 
     for coluna in tabela:
@@ -27,7 +69,7 @@ def desenhar_rodape(desenho, pagina=1):
     xcor = 750
     ycor = 1015
 
-    desenho.text((xcor, ycor), str(pagina), font=fonte, fill=(108, 49, 14, 255))
+    desenho.text((xcor, ycor), str(pagina), font=fonte, fill=cor)
     return desenho
 
 
@@ -37,7 +79,7 @@ def desenhar_numeros(cartela, numeros_cartela, pagina=1):
     f = ImageFont.truetype("assets/Dunkin.otf", 17)
     delta = 160
     x = -10
-    
+
     for indice_c, coluna in enumerate(numeros_cartela):
         x += delta
         y = -25
@@ -46,13 +88,13 @@ def desenhar_numeros(cartela, numeros_cartela, pagina=1):
                 # também soma aqui por causa do quadrado do meio
                 y += delta
 
-            txt=Image.new('L', (500,50))
+            txt = Image.new("L", (500, 50))
             d = ImageDraw.Draw(txt)
-            d.text( (0, 0), str(linha),  font=f, fill=255)
-            w=txt.rotate(45,  expand=1)
-            print(x,y, linha)
-            cartela.paste( ImageOps.colorize(w, (0,0,0), (0,0,0)), (x,y),  w)
-            #desenho.text((x, y), str(linha), font=fonte, fill=cor)
+            d.text((0, 0), str(linha), font=f, fill=255)
+            w = txt.rotate(45, expand=1)
+            # print(x,y, linha)
+            cartela.paste(ImageOps.colorize(w, (0, 0, 0), (0, 0, 0)), (x, y), w)
+            # desenho.text((x, y), str(linha), font=fonte, fill=cor)
             y += delta
 
 
@@ -112,6 +154,6 @@ def juntar_as_cartelas():
     nova_imagem.save(f"para_pdf_{indice}.jpg", "JPEG")
 
 
-gerar_cartelas(quantidade=1, numero_inicial=1)
-juntar_as_cartelas()
-os.system("convert para_pdf_* imprimir.pdf")
+gerar_cartelas(quantidade=60, numero_inicial=1)
+# juntar_as_cartelas()
+# os.system("convert para_pdf_* imprimir.pdf")
